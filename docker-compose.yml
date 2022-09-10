@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    command: uvicorn main:app --reload --host 0.0.0.0
+    ports:
+      - 8000:8000
+    depends_on: 
+      - datefact_db
+
+  datefact_db:
+    container_name: datefact_db
+    hostname: host.docker.internal
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /data/volumes/myproject/datefact_db:/var/lib/postgresql/data/

@@ -9,6 +9,10 @@ import service.datefact as DateFactService
 
 datefact=APIRouter()
 
+@datefact.get('/')
+async def test():
+  return {"message": "Hello World"}
+
 @datefact.post('/dates')
 async def createDateFact(dates : DateFactCreate, db: Session = Depends(get_db)):
   return DateFactService.insertOrUpdate(dates=dates, db=db)
