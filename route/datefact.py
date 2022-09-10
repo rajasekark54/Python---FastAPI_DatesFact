@@ -10,7 +10,7 @@ import service.datefact as DateFactService
 datefact=APIRouter()
 
 @datefact.get('/')
-async def test():
+async def heloworld():
   return {"message": "Hello World"}
 
 @datefact.post('/dates')
@@ -33,6 +33,6 @@ async def verify_apiKey(X_API_KEY: str = Header()):
 async def deleteDateFact(id: int, db: Session = Depends(get_db)):
   return DateFactService.delete(id=id, db = db)
 
-@datefact.get('/dates/test')
-async def testtt(db: Session = Depends(get_db)):
-  return DateFactService.test(db = db)
+# @datefact.get('/dates/test')
+# async def testtt(db: Session = Depends(get_db)):
+#   return DateFactService.test(db = db)
