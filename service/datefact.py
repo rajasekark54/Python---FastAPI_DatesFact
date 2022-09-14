@@ -1,15 +1,13 @@
-from ast import Return
-from datetime import date
-from sqlalchemy.orm import Session
-from schemas.datefact import DateFactCreate
-from model.datefact import DateFact
 import calendar
-from sqlalchemy.exc import SQLAlchemyError
-from fastapi import APIRouter, Depends, HTTPException, status
 from core.logger import get_logger
-import service.api.request as request
 from core.config import settings
-from time import strptime
+from fastapi import HTTPException, status
+from model.datefact import DateFact
+from schemas.datefact import DateFactCreate
+import service.api.request as request
+from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import desc, func
 
 logger = get_logger(__name__)
 
@@ -75,16 +73,21 @@ def delete(id:int, db:Session):
     return dates;
 
 def getByDayMonth(month: str, day: int, db:Session):
-    return db.query(DateFact).filter(DateFact.month == month).first()
-
-def test(db:Session):
-    return 'eeee'
-    dates = db.query(DateFact).filter(DateFact.month == 'January').first()
-    print(dates)
-    return dates
+    return db.query(DateFact).filter(DateFact.month == month, DateFact.day == day).first()
 
 def list(month: str, day: int, db:Session):
     return db.query(DateFact).all()
-     
 
-
+def getMonthRankingList(db:Session):
+    result = db.query(DateFact.month, func.count(DateFact.month).label("days_checked")
+            ).group_by(
+                DateFact.month
+            ).order_by(desc(func.count(DateFact.month))).all()
+            
+    dictrows = [dict(row) for row in result]
+    itr = 1
+    for record in dictrows:
+      print("\n", record)
+      record['id'] = itr
+      itr += 1
+    return dictrows

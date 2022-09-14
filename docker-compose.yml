@@ -1,12 +1,14 @@
 version: '3.8'
 services:
   backend:
+    container_name: datefact_backend
     build: .
-    command: uvicorn main:app --reload --host 0.0.0.0
+    command: uvicorn main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
     depends_on: 
       - datefact_db
+    restart: always
 
   datefact_db:
     container_name: datefact_db

@@ -1,7 +1,4 @@
-from typing import Text
-from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
-from datetime import datetime, time, timedelta
+from sqlalchemy import Column, Integer, String, Text
 
 from db.base_model import BaseModel
 

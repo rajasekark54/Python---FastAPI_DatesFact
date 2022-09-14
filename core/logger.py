@@ -6,7 +6,6 @@ from rich.logging import RichHandler
 
 console = Console(color_system="256", width=200, style="blue")
 
-
 @lru_cache()
 def get_logger(module_name):
     logger = logging.getLogger(module_name)

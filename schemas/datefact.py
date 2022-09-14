@@ -1,9 +1,6 @@
-from typing import Optional
 from wsgiref.validate import validator
 from pydantic import Field
-from pydantic import BaseModel, EmailStr, ValidationError, validator
-import calendar
-from datetime import date
+from pydantic import BaseModel, validator
 
 #properties required during user creation
 class DateFactCreate(BaseModel):
